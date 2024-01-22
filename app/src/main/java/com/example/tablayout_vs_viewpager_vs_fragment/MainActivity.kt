@@ -2,14 +2,14 @@ package com.example.tablayout_vs_viewpager_vs_fragment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.tablayout_vs_viewpager_vs_fragment.adapter.MainViewPagerAdapter
+import com.example.tablayout_vs_viewpager_vs_fragment.adapter.MusicViewPagerAdapter
 import com.example.tablayout_vs_viewpager_vs_fragment.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mViewPager : ViewPager
     private lateinit var mBottomNavigationView : BottomNavigationView
 
-    private lateinit var mPagerAdapter: PagerAdapter
-
+    private lateinit var mMusicViewPagerAdapter: MusicViewPagerAdapter
+    private lateinit var mMainViewPagerAdapter : MainViewPagerAdapter
     private var backPressTime : Long = 0
     private lateinit var mToast : Toast
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,36 +28,40 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mTabLayout = binding.tabLayout
+//        mTabLayout = binding.tabLayout
         mViewPager =  binding.viewPager
         mBottomNavigationView = binding.bottomNav
 
-        mPagerAdapter = PagerAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
-        mViewPager.adapter = mPagerAdapter
+        // setup adapter
+        mMainViewPagerAdapter = MainViewPagerAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        mViewPager.adapter = mMainViewPagerAdapter
 
-        mTabLayout.setupWithViewPager(mViewPager)
+//        mMusicViewPagerAdapter = MusicViewPagerAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+//        mViewPager.adapter = mMusicViewPagerAdapter
+//
+//        mTabLayout.setupWithViewPager(mViewPager)
 
         mBottomNavigationView.setOnNavigationItemSelectedListener{
         item ->
             when (item.itemId){
                 R.id.action_home -> {
-                    Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.action_music -> {
-                    Toast.makeText(this, "music", Toast.LENGTH_SHORT).show()
+                    mViewPager.currentItem = 0
                     true
                 }
                 R.id.action_search -> {
-                    Toast.makeText(this, "search", Toast.LENGTH_SHORT).show()
+                    mViewPager.currentItem = 1
+                    true
+                }
+                R.id.action_music -> {
+                    mViewPager.currentItem = 2
                     true
                 }
                 R.id.action_collection_bookmark -> {
-                    Toast.makeText(this, "bookmarks", Toast.LENGTH_SHORT).show()
+                    mViewPager.currentItem = 3
                     true
                 }
                 R.id.action_person -> {
-                    Toast.makeText(this, "person", Toast.LENGTH_SHORT).show()
+                    mViewPager.currentItem = 4
                     true
                 }
 
