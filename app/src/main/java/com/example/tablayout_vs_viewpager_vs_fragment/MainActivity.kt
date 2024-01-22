@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var mTabLayout : TabLayout
-    private lateinit var mViewPager : ViewPager
+    private lateinit var mMainViewPager : ViewPager
     private lateinit var mBottomNavigationView : BottomNavigationView
 
     private lateinit var mMusicViewPagerAdapter: MusicViewPagerAdapter
@@ -29,12 +29,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //        mTabLayout = binding.tabLayout
-        mViewPager =  binding.viewPager
+        mMainViewPager =  binding.viewPager
         mBottomNavigationView = binding.bottomNav
 
         // setup adapter
         mMainViewPagerAdapter = MainViewPagerAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
-        mViewPager.adapter = mMainViewPagerAdapter
+        mMainViewPager.adapter = mMainViewPagerAdapter
+
+        mMainViewPager.addOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener{
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int,
+                ) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                    when (position){
+                        0 -> mBottomNavigationView.menu.findItem(R.id.action_home).isChecked = true
+                        1 -> mBottomNavigationView.menu.findItem(R.id.action_search).isChecked = true
+                        2 -> mBottomNavigationView.menu.findItem(R.id.action_music).isChecked = true
+                        3 -> mBottomNavigationView.menu.findItem(R.id.action_collection_bookmark).isChecked = true
+                        4 -> mBottomNavigationView.menu.findItem(R.id.action_person).isChecked = true
+                    }
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+            })
 
 //        mMusicViewPagerAdapter = MusicViewPagerAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
 //        mViewPager.adapter = mMusicViewPagerAdapter
@@ -45,23 +70,23 @@ class MainActivity : AppCompatActivity() {
         item ->
             when (item.itemId){
                 R.id.action_home -> {
-                    mViewPager.currentItem = 0
+                    mMainViewPager.currentItem = 0
                     true
                 }
                 R.id.action_search -> {
-                    mViewPager.currentItem = 1
+                    mMainViewPager.currentItem = 1
                     true
                 }
                 R.id.action_music -> {
-                    mViewPager.currentItem = 2
+                    mMainViewPager.currentItem = 2
                     true
                 }
                 R.id.action_collection_bookmark -> {
-                    mViewPager.currentItem = 3
+                    mMainViewPager.currentItem = 3
                     true
                 }
                 R.id.action_person -> {
-                    mViewPager.currentItem = 4
+                    mMainViewPager.currentItem = 4
                     true
                 }
 

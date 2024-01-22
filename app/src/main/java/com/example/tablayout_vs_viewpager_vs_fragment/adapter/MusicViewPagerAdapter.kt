@@ -7,7 +7,7 @@ import com.example.tablayout_vs_viewpager_vs_fragment.views.music.AlbumsFragment
 import com.example.tablayout_vs_viewpager_vs_fragment.views.music.ArtistsFragment
 import com.example.tablayout_vs_viewpager_vs_fragment.views.music.PlaylistFragment
 
-class MusicViewPagerAdapter(fm : FragmentManager, behavior : Int) : FragmentStatePagerAdapter(fm, behavior) {
+class MusicViewPagerAdapter(fm : FragmentManager, behavior : Int) : FragmentStatePagerAdapter(fm, behavior){
 
     override fun getCount(): Int {
         return 3
